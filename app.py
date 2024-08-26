@@ -37,7 +37,7 @@ def IniciaConFechaYHora(s):
 
 # Patrón para encontrar a los miembros del grupo dentro del txt
 def EncontrarMiembro(s):
-    patrones = ['Yo 🤙:','Tú ❤️:']
+    patrones = ['Jose Hancco:','🪐❤️:']
 
     patron = '^' + '|'.join(patrones)
     resultado = re.match(patron, s)  # Verificar si cada línea del txt hace match con el patrón de miembro
@@ -68,7 +68,7 @@ def ObtenerPartes(linea):
 ##################################################################################
 
 # Leer el archivo txt descargado del chat de WhatsApp
-RutaChat = 'Data/WhatsApp Chat with Tú ❤️.txt'
+RutaChat = 'Data/WhatsApp Chat with 🪐❤️.txt'
 
 # Lista para almacenar los datos (Fecha, Hora, Miembro, Mensaje) de cada línea del txt
 DatosLista = []
