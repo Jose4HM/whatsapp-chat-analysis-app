@@ -68,7 +68,7 @@ def ObtenerPartes(linea):
 ##################################################################################
 
 # Leer el archivo txt descargado del chat de WhatsApp
-RutaChat = 'Data/WhatsApp Chat with ❤️.txt'
+RutaChat = 'Data/WhatsApp Chat with 🪐❤️.txt'
 
 # Lista para almacenar los datos (Fecha, Hora, Miembro, Mensaje) de cada línea del txt
 DatosLista = []
@@ -93,6 +93,9 @@ df['Fecha'] = pd.to_datetime(df['Fecha'], format="%m/%d/%y")
 # Eliminar los posibles campos vacíos del dataframe
 # y lo que no son mensajes como cambiar el asunto del grupo o agregar a alguien
 df = df.dropna()
+
+# Filtrar y eliminar mensajes de multimedia (<Media omitted>)
+df = df[df['Mensaje'] != '<Media omitted>']
 
 # Resetear el índice
 df.reset_index(drop=True, inplace=True)
