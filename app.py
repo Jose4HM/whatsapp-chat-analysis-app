@@ -68,7 +68,7 @@ def ObtenerPartes(linea):
 ##################################################################################
 
 # Leer el archivo txt descargado del chat de WhatsApp
-RutaChat = 'Data/WhatsApp Chat with 🪐❤️.txt'
+RutaChat = 'Data/WhatsApp Chat with Ingri.txt'
 
 # Lista para almacenar los datos (Fecha, Hora, Miembro, Mensaje) de cada línea del txt
 DatosLista = []
@@ -94,15 +94,15 @@ df['Fecha'] = pd.to_datetime(df['Fecha'], format="%m/%d/%y")
 # y lo que no son mensajes como cambiar el asunto del grupo o agregar a alguien
 df = df.dropna()
 
-# Filtrar y eliminar mensajes de multimedia (<Media omitted>)
-df = df[df['Mensaje'] != '<Media omitted>']
+# # Filtrar y eliminar mensajes de multimedia (<Media omitted>)
+# df = df[df['Mensaje'] != '<Media omitted>']
 
 # Resetear el índice
 df.reset_index(drop=True, inplace=True)
 
 # #### Filtrar el chat por fecha de acuerdo a lo requerido
 start_date = '2023-04-06'
-end_date = '2024-08-25'
+end_date = '2025-02-28'
 
 df = df[(df['Fecha'] >= start_date) & (df['Fecha'] <= end_date)]
 
@@ -393,7 +393,7 @@ st.plotly_chart(fig)
 df['# Mensajes por día'] = 1
 
 # Sumar (contar) los mensajes que tengan la misma fecha
-date_df = df.groupby('Fecha').sum().reset_index()
+date_df = df.groupby('Fecha').sum(numeric_only=True).reset_index()
 
 # Plotear la cantidad de mensajes respecto del tiempo
 fig = px.line(date_df, x='Fecha', y='# Mensajes por día', color_discrete_sequence=['salmon'], template='plotly_dark')
@@ -428,23 +428,18 @@ stopwords = STOPWORDS.update(['que', 'qué', 'con', 'de', 'te', 'en', 'la', 'lo'
 
 mask = np.array(Image.open('Resources/heart.jpg'))
 
-# Obtener y acumular todas las palabras de cada mensaje
-for mensaje in mensajes_df['Mensaje'].values:
-    palabras = str(mensaje).lower().split() # Obtener las palabras de cada línea del txt
-    for palabra in palabras:
-        total_palabras = total_palabras + palabra + ' ' # Acumular todas las palabras
+# Crear un string con todas las palabras sin necesidad de iterar dos veces
+total_palabras = ' '.join(mensajes_df['Mensaje'].dropna().str.lower().tolist())
 
-wordcloud = WordCloud(width = 800, height = 800, background_color ='black', stopwords = stopwords,
-                      max_words=100, min_font_size = 5,
+
+wordcloud = WordCloud(width = 1200, height = 1200, background_color ='black', stopwords = stopwords,
+                      max_words=200, min_font_size = 5,
                       mask = mask, colormap='OrRd',).generate(total_palabras)
-
-# Plotear la nube de palabras más usadas
-# wordcloud.to_image()
 
 
 ###################################
 ###################################
 st.header('☁️ Nuestro word cloud')
-st.image(wordcloud.to_array(), caption='Las palabras que más usamos ❤️', use_column_width=True)
+st.image(wordcloud.to_array(), caption='Las palabras que más usamos ❤️', use_container_width=True)
 ###################################
 ###################################
