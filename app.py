@@ -37,7 +37,7 @@ def IniciaConFechaYHora(s):
 
 # Patrón para encontrar a los miembros del grupo dentro del txt
 def EncontrarMiembro(s):
-    patrones = ['Jose Hancco:','🪐❤️:']
+    patrones = ['Jose Hancco:','🪐♥️:']
 
     patron = '^' + '|'.join(patrones)
     resultado = re.match(patron, s)  # Verificar si cada línea del txt hace match con el patrón de miembro
@@ -102,7 +102,7 @@ df.reset_index(drop=True, inplace=True)
 
 # #### Filtrar el chat por fecha de acuerdo a lo requerido
 start_date = '2023-04-06'
-end_date = '2025-02-28'
+end_date = '2025-05-18'
 
 df = df[(df['Fecha'] >= start_date) & (df['Fecha'] <= end_date)]
 
